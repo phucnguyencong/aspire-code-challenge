@@ -26,9 +26,9 @@ class LoanService {
     public function createNewLoan($data): Loan
     {
         $loanData = [
-            "user_id" => Auth::id(),
+            "user_id" => $data["user_id"],
             "amount" => $data["amount"],
-            "loan_term" => $data["loan_term"]
+            "loan_term" => Carbon::parse($data["loan_term"])->format("Y-m-d")
         ];
 
         return $this->loanRepository->create($loanData);
@@ -36,21 +36,20 @@ class LoanService {
 
 
     /**
-     * Allow approval or reject loan via current user login
+     * Allow approval and track who is approved
      *
-     * @param $id
      * @param $data
      * @return mixed
      */
-    public function approveOrReject($id, $data)
+    public function approve($data)
     {
         $loanData = [
-            "approve_by" => Auth::id(),
-            "approve_at" => $data["is_approve"] ? Carbon::now() : null, // Check approve or reject
+            "approved_by" => $data["approved_by"],
+            "approved_at" => Carbon::parse($data["approved_at"])->format("Y-m-d")
         ];
 
-        if($this->loanRepository->update($id, $loanData)) {
-            return $this->loanRepository->find($id);
+        if($this->loanRepository->update($data["id"], $loanData)) {
+            return $this->loanRepository->find($data["id"]);
         }
         return false;
     }

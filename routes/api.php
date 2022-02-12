@@ -31,5 +31,6 @@ Route::group([
     ], function () {
             Route::post('/', [LoanController::class, 'store']);
             Route::patch('{id}/approval', [LoanController::class, 'approveLoan']);
+            Route::post('{id}/repayment', [LoanController::class, 'createRepay']);
     });
 });

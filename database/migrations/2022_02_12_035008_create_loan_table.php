@@ -2,11 +2,12 @@
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\Schema;
 
 /**
  * Class CreateLoansTable.
  */
-class CreateLoansTable extends Migration
+class CreateLoanTable extends Migration
 {
 	/**
 	 * Run the migrations.
@@ -15,13 +16,12 @@ class CreateLoansTable extends Migration
 	 */
 	public function up()
 	{
-		Schema::create('loans', function(Blueprint $table) {
+		Schema::create('loan', function(Blueprint $table) {
             $table->increments('id');
             $table->bigInteger('user_id')->index();
             $table->decimal('amount', 10, 2);
-            $table->decimal('remain_amount', 10, 2)->default(0);
-            $table->bigInteger('approve_by')->nullable(true);
-            $table->date('approve_at')->nullable(true);
+            $table->bigInteger('approved_by')->nullable(true);
+            $table->date('approved_at')->nullable(true);
             $table->date('loan_term')->nullable(false);
             $table->timestamps();
 		});
@@ -34,6 +34,6 @@ class CreateLoansTable extends Migration
 	 */
 	public function down()
 	{
-		Schema::drop('loans');
+		Schema::drop('loan');
 	}
 }
