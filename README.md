@@ -10,15 +10,23 @@ debtor submit
 - Approve Loan for debtors
 
 ## Setup up Project
-1. Clone source code
+
+### Clone source code
 ```shell
 git clone https://github.com/phucnguyencong/aspire-code-challenge.git
-```
-2. Run commands to setup environment
-```shell
 cd aspire-code-challenge
-cp .env.example .env
+```
+
+### Setup 
+1. Option with shell script
+```shell
+sh ./shell/setup.sh
+```
+
+2. Option manual step
+```shell
 touch database/database.sqlite
+cp .env.example .env
 ```
 Make sure change before continue
 ```DB_DATABASE=/absolute/path/to/database.sqlite```
@@ -29,7 +37,8 @@ php artisan key:generate
 php artisan migrate
 php artisan passport:install
 ```
-3. Start application
+
+### Start application
 ```shell
 php artisan serve
 ```
