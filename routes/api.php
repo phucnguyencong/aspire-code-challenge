@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LoanController;
+use App\Http\Controllers\RepaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +32,6 @@ Route::group([
     ], function () {
             Route::post('/', [LoanController::class, 'store']);
             Route::patch('{id}/approval', [LoanController::class, 'approveLoan']);
-            Route::post('{id}/repayment', [LoanController::class, 'createRepay']);
+            Route::post('{id}/repayment', [RepaymentController::class, 'createRepay']);
     });
 });

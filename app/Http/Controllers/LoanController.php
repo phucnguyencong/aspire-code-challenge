@@ -13,12 +13,10 @@ use Illuminate\Support\Facades\Auth;
 class LoanController extends Controller
 {
     private LoanValidator $loanValidator;
-    private RepaymentValidator $repaymentValidator;
 
     public function __construct()
     {
         $this->loanValidator = new LoanValidator();
-        $this->repaymentValidator = new RepaymentValidator();
     }
     /**
      * Validate data input then call service create new loan.
@@ -81,34 +79,6 @@ class LoanController extends Controller
         return response()->json([
             "status" => "fails",
             "message" => "Can not approve loan."
-        ]);
-    }
-
-    /**
-     * Validate data and create new repayment with loan id
-     *
-     * @param int $loanId
-     * @param Request $request
-     * @return JsonResponse
-     */
-    public function createRepay(int $loanId, Request $request): JsonResponse
-    {
-        $input = array_merge($request->all(), ["loan_id" => $loanId]);
-        $validate = $this->repaymentValidator->validateCreateRepayRequest($input);
-        if ($validate->fails()) {
-            return response()->json([
-                "status" => "fails",
-                "message" => $validate->errors()->first(),
-                "errors" => $validate->errors()->toArray(),
-            ], 400);
-        }
-
-        $repaymentService = new RepaymentService();
-        $result = $repaymentService->createNewRepayment($input);
-
-        return response()->json([
-            "status" => "success",
-            "data" => $result
         ]);
     }
 }
