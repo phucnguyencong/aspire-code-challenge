@@ -44,11 +44,15 @@ php artisan serve
 ```
 
 ## Run test
-1. Migrate data before run test
+1. Run Feature test
 ```shell
-php artisan db:seed
+php artisan test --testsuite=Feature
 ```
-2. Run test with command
+2. Run Unit test
+```shell
+php artisan test --testsuite=Unit
+```
+3. Run all testsuite
 ```shell
 php artisan test
 ```

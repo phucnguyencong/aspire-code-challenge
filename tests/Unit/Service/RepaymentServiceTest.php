@@ -4,22 +4,24 @@ namespace Tests\Unit\Service;
 
 use App\Models\Loan;
 use App\Models\Repayment;
-use App\Services\LoanService;
 use App\Services\RepaymentService;
 use Carbon\Carbon;
+use Database\Seeders\UserSeeder;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use App\Models\User;
 use Illuminate\Foundation\Testing\WithFaker;
 
 class RepaymentServiceTest extends TestCase
 {
-    use WithFaker;
+    use WithFaker, RefreshDatabase;
     protected Loan $loan;
     protected RepaymentService $repaymentService;
 
     public function setUp(): void
     {
         parent::setUp();
+        $this->seed(UserSeeder::class);
         $this->loan = Loan::create([
             "user_id" => User::where("name", "debtor")->first()->id,
             "amount" => $this->faker->numerify('####.##'),

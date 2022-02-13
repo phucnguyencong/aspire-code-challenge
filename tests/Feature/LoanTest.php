@@ -5,13 +5,14 @@ namespace Tests\Feature;
 use App\Models\Loan;
 use App\Models\User;
 use Carbon\Carbon;
+use Database\Seeders\UserSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class LoanTest extends TestCase
 {
-    use WithFaker;
+    use WithFaker, RefreshDatabase;
     private User $debtorUser;
     private User $creditorUser;
     private array $loanData;
@@ -19,6 +20,7 @@ class LoanTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+        $this->seed(UserSeeder::class);
         $this->debtorUser = User::where("name", "debtor")->first();
         $this->creditorUser = User::where("name", "creditor")->first();
         $this->loanData = [
