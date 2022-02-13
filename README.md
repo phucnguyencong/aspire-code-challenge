@@ -18,6 +18,7 @@ git clone https://github.com/phucnguyencong/aspire-code-challenge.git
 ```shell
 cd aspire-code-challenge
 cp .env.example .env
+touch database/database.sqlite
 ```
 Make sure change before continue
 ```DB_DATABASE=/absolute/path/to/database.sqlite```
@@ -32,3 +33,14 @@ php artisan passport:install
 ```shell
 php artisan serve
 ```
+
+## Run test
+1. Migrate data before run test
+```shell
+php artisan db:seed
+```
+2. Run test with command
+```shell
+php artisan test
+```
+follow [this link](https://laravel.com/docs/8.x/testing) for more information run test
