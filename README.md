@@ -41,7 +41,10 @@ cd aspire-code-challenge
 ```
 
 ## Setup 
-1. Option with shell script
+Note: 
+- Make sure extension solidum enable in PHP ini
+
+1. Option with shell script (work well on MacOS, Linux OS)
 ```shell
 sh ./shell/setup.sh
 ```
