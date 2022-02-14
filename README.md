@@ -29,7 +29,6 @@ Model -> Repository -> Service -> Transformer -> Controller
 JSON response that you need. By using transformers we can also do type casting, 
 pagination results, and also nest relationships.
 
-Repository 
 # How to set up Project
 ## Clone source code
 ```shell
