@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Services\RepaymentService;
+use App\Transformers\RepaymentTransformer;
 use App\Validator\RepaymentValidator;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -36,11 +37,14 @@ class RepaymentController extends Controller
         }
 
         $repaymentService = new RepaymentService();
-        $result = $repaymentService->createNewRepayment($input);
+        $repayment = $repaymentService->createNewRepayment($input);
+        $result = fractal()->item($repayment)
+            ->transformWith(new RepaymentTransformer())
+            ->toArray();
 
         return response()->json([
             "status" => "success",
-            "data" => $result
+            "data" => $result["data"]
         ]);
     }
 }

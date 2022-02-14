@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Loan;
+use App\Models\Repayment;
 use App\Models\User;
 use Carbon\Carbon;
 use Database\Seeders\UserSeeder;
@@ -84,6 +85,8 @@ class LoanTest extends TestCase
             "repaid_at" => Carbon::now()->format('Y-m-d')
         ];
 
+        $this->assertEquals(0, Repayment::count());
+
         $response = $this->actingAs($this->debtorUser, 'api')
             ->postJson("/api/loan/{$loan->id}/repayment", $payload);
 
@@ -91,6 +94,8 @@ class LoanTest extends TestCase
         $response->assertJson([
             "status"=> "success",
             "data"=> [
+                "id" => Repayment::first()->id,
+                "loan_id" => $loan->id,
                 "amount"=> $payload["amount"],
                 "repaid_at"=> $payload["repaid_at"]
             ]
