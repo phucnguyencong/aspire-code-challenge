@@ -79,17 +79,4 @@ class AuthController extends Controller
             )->toDateTimeString()
         ]);
     }
-
-//    public function logout(Request $request)
-//    {
-//        $request->user()->token()->revoke();
-//        return response()->json([
-//            'status' => 'success',
-//        ]);
-//    }
-//
-//    public function user(Request $request)
-//    {
-//        return response()->json($request->user());
-//    }
 }

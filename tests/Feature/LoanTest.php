@@ -32,6 +32,8 @@ class LoanTest extends TestCase
 
     public function test_create_new_loan_success()
     {
+        $this->assertEquals(0, Loan::count());
+
         $response = $this->actingAs($this->debtorUser, 'api')
             ->postJson('/api/loan', $this->loanData);
 
@@ -39,7 +41,7 @@ class LoanTest extends TestCase
         $response->assertJson([
             "status"=> "success",
             "data"=> [
-                "user_id"=> $this->debtorUser->id,
+                "id"=> Loan::first()->id,
                 "amount"=> $this->loanData["amount"],
                 "loan_term"=> $this->loanData["loan_term"]
             ]
@@ -49,6 +51,7 @@ class LoanTest extends TestCase
     public function test_approve_loan_success()
     {
         $loan = Loan::create($this->loanData);
+
         $payload = [
             "approved_at" => Carbon::now()->format('Y-m-d'),
         ];
@@ -60,6 +63,9 @@ class LoanTest extends TestCase
         $response->assertJson([
             "status"=> "success",
             "data"=> [
+                "id" => $loan->id,
+                "amount"=> $this->loanData["amount"],
+                "loan_term"=> $this->loanData["loan_term"],
                 "approved_at"=> $payload["approved_at"],
                 "approved_by"=> $this->creditorUser->id
             ]

@@ -40,10 +40,13 @@ class LoanServiceTest extends TestCase
      */
     public function test_create_new_loan_success()
     {
+        $this->assertEquals(0, Loan::count());
         $loan = $this->loanService->createNewLoan($this->loanData);
 
         $this->assertInstanceOf(Loan::class, $loan);
 
+        $this->assertEquals(1, Loan::count());
+        $this->assertGreaterThan(0, $loan->id);
         $this->assertEquals($this->loanData["user_id"], $loan->user_id);
         $this->assertEquals($this->loanData["amount"], $loan->amount);
         $this->assertEquals($this->loanData["loan_term"], $loan->loan_term);
@@ -68,6 +71,7 @@ class LoanServiceTest extends TestCase
 
         $this->assertInstanceOf(Loan::class, $loan);
 
+        $this->assertEquals($loanObject->id, $loan->id);
         $this->assertEquals($this->loanData["user_id"], $loan->user_id);
         $this->assertEquals($this->loanData["amount"], $loan->amount);
         $this->assertEquals($this->loanData["loan_term"], $loan->loan_term);

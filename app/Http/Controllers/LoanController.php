@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\RepaymentService;
-use App\Validator\RepaymentValidator;
+use App\Transformers\LoanTransformer;
 use Illuminate\Http\Request;
 use App\Services\LoanService;
 use Illuminate\Http\JsonResponse;
@@ -38,10 +37,14 @@ class LoanController extends Controller
         }
 
         $loanService = new LoanService();
-        $result = $loanService->createNewLoan($input);
+        $loan = $loanService->createNewLoan($input);
+        $result = fractal()->item($loan)
+            ->transformWith(new LoanTransformer)
+            ->toArray();
+
         return response()->json([
             "status" => "success",
-            "data" => $result
+            "data" => $result["data"]
         ]);
     }
 
@@ -68,12 +71,15 @@ class LoanController extends Controller
         }
 
         $loanService = new LoanService();
-        $result = $loanService->approve($input);
+        $loan = $loanService->approve($input);
 
-        if($result) {
+        if($loan) {
+            $result = fractal()->item($loan)
+                ->transformWith(new LoanTransformer)
+                ->toArray();
             return response()->json([
                 "status" => "success",
-                "data" => $result
+                "data" => $result["data"]
             ]);
         }
         return response()->json([
