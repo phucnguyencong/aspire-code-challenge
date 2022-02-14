@@ -48,6 +48,8 @@ class RepaymentServiceTest extends TestCase
 
         $this->assertInstanceOf(Repayment::class, $repayment);
 
+        $this->assertEquals(1, Repayment::count());
+        $this->assertGreaterThan(0, $repayment->id);
         $this->assertEquals($arguments["loan_id"], $repayment->loan_id);
         $this->assertEquals($arguments["amount"], $repayment->amount);
         $this->assertEquals($arguments["repaid_at"], $repayment->repaid_at);
