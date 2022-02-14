@@ -5,10 +5,31 @@ debtor submit
 ## User case
 1. Debtor:
 - Request new Loan
-- Repay weekly via Loan approve
+- Repay weekly via loan was approved
 2. Creditor/Admin:
 - Approve Loan for debtors
 
+# Workflow and explain
+- I am build project based service-repository pattern
+The concept of repositories and services ensure that you will reusable code and help to keep
+your controller as simple as possible making theme more readable.
+
+1. When a request from client to server will follow:
+Controller -> Validator -> Service -> Repository -> Model
+- Repositories are usually a common wrapper for your model and the place where you would 
+write different queries in your database. Sometimes we will use Query Builder in repository
+because when handle with big data and using Laravel relationship or complex query condition
+is nightmare for performance. Just make sure using it suitable for context
+- A service on the other hand is a layer for handling all your application’s logic
+- I don't want controller handle too many tasks. That is why I break Validator to new layer so
+we could reuse later
+2. When get data and response to client will follow:
+Model -> Repository -> Service -> Transformer -> Controller
+- Based on experience, transformers give you the flexibility to create a format for
+JSON response that you need. By using transformers we can also do type casting, 
+pagination results, and also nest relationships.
+
+Repository 
 # How to set up Project
 ## Clone source code
 ```shell
