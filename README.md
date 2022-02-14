@@ -30,6 +30,10 @@ JSON response that you need. By using transformers we can also do type casting,
 pagination results, and also nest relationships.
 
 # How to set up Project
+## Prerequisites
+- PHP >=7.4
+- Composer
+
 ## Clone source code
 ```shell
 git clone https://github.com/phucnguyencong/aspire-code-challenge.git
